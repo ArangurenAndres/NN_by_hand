@@ -106,7 +106,7 @@ class simpleNN:
                 dl_dx[i] += dl_dz[j] * self.w_1[i][j]
 
         # Return all gradients
-        return dL_dw1, dL_dw2
+        return (dL_dw1, dL_db1),(dL_dw2,dL_db2)
 
 
 if __name__ == "__main__":
