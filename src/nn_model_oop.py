@@ -1,10 +1,10 @@
 
 import math
 
-def sigmoid(x):
+def sigmoid(x) -> float:
     return 1/(1+math.exp(-x))
 
-def softmax(x):
+def softmax(x) ->list:
     exp_vec = list(map(lambda x: math.exp(x),x))
     sum_exp = sum(exp_vec)
     y = [v/sum_exp for v in exp_vec]
@@ -16,15 +16,19 @@ class simpleNN:
     def __init__(self):
         self.w_1 = [[1., 1., 1.], [-1., -1., -1.]] 
         self.b_1 = [0,0,0]
-        self.w_2 = [[1., 1.], [-1., -1.], [-1., -1.]]
-        self.b_2 = [0,0]
+        self.v_1 = [[1., 1.], [-1., -1.], [-1., -1.]]
+        self.c_1 = [0,0]
     
     def forward(self,x):
         self.z = []
         self.h = []
-        # First layer computer linear output z and sigmoid activation h
+        # First layer compute linear output z and sigmoid activation h
         for j in range(3):
-           # Layer:1 linear output input (x) * weights vector (w)
+           # index j loops over the three hidden layer units (3)
+           # Layer:1 linear output W*x + b
+           # Expected dimension (3,2)*(2,1) => (3,1)
+           # We perform the operation for each unit and then append it to z
+           # i iterates over the two input units
            z_t=sum(self.w_1[i][j]*x[i] for i in range(2))+self.b_1[j]
            h_t = sigmoid(z_t)
            self.z.append(z_t)
@@ -33,8 +37,10 @@ class simpleNN:
         print(f"Activation first layer:{self.h}")
         # Hidden layer output
         self.o = []
+        # Loop over the two k output units
         for k in range(2):
-            o_t = sum(self.w_2[j][k]*self.h[j] for j in range(3))+ self.b_2[k]
+            # Use j to iterate over the three hidden layer units
+            o_t = sum(self.v_1[j][k]*self.h[j] for j in range(3))+ self.c_1[k]
             self.o.append(o_t)
         print(f"Hidden layer linear output:{self.o}")
         # Compute softmax
@@ -74,7 +80,7 @@ class simpleNN:
         dl_dh = [0, 0, 0]
         for j in range(3):
             for k in range(2):
-                dl_dh[j] += dl_do[k] * self.w_2[j][k]
+                dl_dh[j] += dl_do[k] * self.v_1[j][k]
 
         # Step 5: Calculate dL/dw2 (weights between hidden and output layer)
         dL_dw2 = [[0, 0], [0, 0], [0, 0]]
@@ -108,16 +114,24 @@ class simpleNN:
         # Return all gradients
         return (dL_dw1, dL_db1),(dL_dw2,dL_db2)
 
+# Run this function to run a whole forward and backpropagation step of the NN
+def run_pass(x = [0,0], target_class = int) -> tuple:
+    NN_model = simpleNN()
+    #Predict
+    y = NN_model.forward(x)
+    print(f"Predicted class:{y}")
+    # Compute loss
+    loss = NN_model.calculate_loss(target_class)
+    print(f"Current loss:{loss}")
+    dw_1,dv_1 = NN_model.backpropagation(x,0)
+    print(f"W,b derivatives: {dw_1}")
+    print(f"V,c derivatives: {dv_1}")
+    return dw_1,dv_1
+
+
 
 if __name__ == "__main__":
-    NN_model = simpleNN()
-    x= [1,-1]
-    y = NN_model.forward(x)
-    loss = NN_model.calculate_loss(0)
-    print(f"Current loss:{loss}")
-    dw_1,dw_2 = NN_model.backpropagation(x,0)
-    print(dw_1)
-    print(dw_2)
+    run_pass(x = [1,-1], target_class= 0)
 
 
 

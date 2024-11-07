@@ -21,10 +21,10 @@ print(f"H activation function applied to Z equals to: {h}")
 
 ## Compute hidden layer linear output
 w_2 = [[1,-1,-1],[1,-1,-1]]
-b_2 = [0,0]
+c_1 = [0,0]
 o = []
 for k in range(2):
-    o_t = sum(w_2[k][j]*h[j]+b_2[k] for j in range(3))
+    o_t = sum(w_2[k][j]*h[j]+c_1[k] for j in range(3))
     o.append(o_t)
 print(f"Second linear output O: {o}")
 
