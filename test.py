@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from src.nn_model_oop import sigmoid, softmax, simpleNN
+from models.nn_model_oop import sigmoid, softmax, simpleNN
 
 """Useful stuff"""
 #python -m unittest discover -s tests

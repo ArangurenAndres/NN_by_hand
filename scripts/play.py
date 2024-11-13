@@ -1,13 +1,17 @@
 import numpy as np
+import json
+import os
 
-v = np.random.rand(30)
-print(v)
 
-w_1 = np.array([[1., 1., 1.], [-1., -1., -1.]])
-print(w_1.shape)
+y = [[1,2,3,4,5,6,7,8]]
 
-a = np.array([0.8807970779778823, 0.8807970779778823, 0.8807970779778823])
-print(a.shape)
+dl_dy = np.zeros_like(y)
+print(dl_dy[[0], 3])
 
-v = np.array([[1., 1.], [-1., -1.], [-1., -1.]])
-print(v.shape)
+
+
+
+
+
+
+
