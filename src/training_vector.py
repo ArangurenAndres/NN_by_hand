@@ -7,6 +7,25 @@ from tqdm import tqdm
 import seaborn as sns
 from sklearn.metrics import confusion_matrix, accuracy_score
 
+def visualize_images(x):
+    # Assuming x_train is already loaded and contains flattened 28x28 images
+    # Reshape the flattened images into their original shape (28x28)
+    x_train = x.reshape(-1, 28, 28)
+
+    # Select 9 random indices from the training set
+    random_indices = np.random.choice(x_train.shape[0], 9, replace=False)
+
+    # Plot the 9 random images in a 3x3 grid
+    fig, axes = plt.subplots(3, 3, figsize=(8, 8))
+    for i, ax in enumerate(axes.flat):
+        ax.imshow(x_train[random_indices[i]], cmap="gray")
+        ax.axis("off")
+    plt.tight_layout()
+    plt.show()
+
+
+
+
 
 # Step 3: Plot the Confusion Matrix
 def plot_confusion_matrix(y_true, y_pred, classes):
@@ -122,22 +141,25 @@ def run_iterations(x_train,y_train,x_val,y_val,it=2):
 
 
 
+
+
 if __name__ == "__main__":
     #When set final to true we will run the training and canonical test dataset
     (x_train, y_train), (x_test, y_test), _ = load_mnist(final = True,flatten=True)
+    visualize_images(x_train)
     # 1. Initialize the model
-    model = SimpleNN()
+    #model = SimpleNN()
     #2. Train model
-    train_loss, val_loss = train_for_epochs(model, x_train, y_train, x_test,y_test,lr=0.01, batch_size=32,epochs=5)
+    #train_loss, val_loss = train_for_epochs(model, x_train, y_train, x_test,y_test,lr=0.01, batch_size=32,epochs=5)
     # plot_loss(train_loss,val_loss, visualize=True, save = True, filename = "final_test.png")
-    accuracy, y_pred_classes = get_accuracy(model,x_test,y_test)
+    #accuracy, y_pred_classes = get_accuracy(model,x_test,y_test)
 
     # Plot confusion matrix
     # Define the class names for MNIST (0-9)
-    class_names = [str(i) for i in range(10)]
+    #class_names = [str(i) for i in range(10)]
 
     # Plot the confusion matrix
-    plot_confusion_matrix(y_test, y_pred_classes, class_names)
+    #plot_confusion_matrix(y_test, y_pred_classes, class_names)
 
     
     
