@@ -1,5 +1,6 @@
 import numpy as np
 
+# Part 3. Question 6 Batch version
 # Define activation functions and loss calculation
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))

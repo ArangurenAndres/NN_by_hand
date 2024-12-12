@@ -7,6 +7,8 @@ import os
 import json
 import matplotlib.pyplot as plt
 import seaborn as sns
+from sklearn.metrics import confusion_matrix, accuracy_score
+
 
 def load_config(default = True):
     if default:
@@ -82,6 +84,37 @@ def plot_loss(train_loss,val_loss, visualize=True, save = False, filename = None
         plt.show()
     else:
         pass
+
+
+
+
+# Step 3: Plot the Confusion Matrix
+def plot_confusion_matrix(y_true, y_pred, classes):
+    cm = confusion_matrix(y_true, y_pred)
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(cm, annot=True, fmt="d", cmap="Blues", cbar=False,
+                xticklabels=classes, yticklabels=classes)
+    plt.xlabel("Predicted Label", fontsize=14)
+    plt.ylabel("True Label", fontsize=14)
+    plt.title("Confusion Matrix", fontsize=16)
+    plt.show()
+
+# Visualize sample images
+def visualize_images(x):
+    # Assuming x_train is already loaded and contains flattened 28x28 images
+    # Reshape the flattened images into their original shape (28x28)
+    x_train = x.reshape(-1, 28, 28)
+
+    # Select 9 random indices from the training set
+    random_indices = np.random.choice(x_train.shape[0], 9, replace=False)
+
+    # Plot the 9 random images in a 3x3 grid
+    fig, axes = plt.subplots(3, 3, figsize=(8, 8))
+    for i, ax in enumerate(axes.flat):
+        ax.imshow(x_train[random_indices[i]], cmap="gray")
+        ax.axis("off")
+    plt.tight_layout()
+    plt.show()
 
 
 if __name__ == "__main__":

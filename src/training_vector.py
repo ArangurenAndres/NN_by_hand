@@ -24,9 +24,6 @@ def visualize_images(x):
     plt.show()
 
 
-
-
-
 # Step 3: Plot the Confusion Matrix
 def plot_confusion_matrix(y_true, y_pred, classes):
     cm = confusion_matrix(y_true, y_pred)
@@ -148,6 +145,7 @@ if __name__ == "__main__":
     (x_train, y_train), (x_test, y_test), _ = load_mnist(final = True,flatten=True)
     visualize_images(x_train)
     # 1. Initialize the model
+    # Part 3 Question 5
     #model = SimpleNN()
     #2. Train model
     #train_loss, val_loss = train_for_epochs(model, x_train, y_train, x_test,y_test,lr=0.01, batch_size=32,epochs=5)
